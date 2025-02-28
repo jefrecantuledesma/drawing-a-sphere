@@ -1,0 +1,37 @@
+const LINES: f32 = 20.0;
+const RADIUS: f32 = 3.0;
+
+#[derive(Debug)]
+enum CoordinatePair {
+    Pair { x: f64, y: f32 },
+}
+
+#[derive(Debug)]
+struct CirclePoints {
+    left_side: CoordinatePair,
+    right_side: CoordinatePair,
+}
+
+fn main() {
+    for i in (-LINES / 2.0 as f32) as i32..(LINES / 2.0 as f32) as i32 {
+        let y = RADIUS / i as f32;
+        let temp_test = calculate_points(y as f32, RADIUS);
+        println!("{:?}", temp_test);
+    }
+}
+
+fn calculate_points(y: f32, r: f32) -> CirclePoints {
+    let x_coordinate_right = f64::sqrt((f32::powf(r, 2.0) as f32 - f32::powf(y, 2.0)) as f64);
+
+    let x_coordinate_left = -&x_coordinate_right;
+    CirclePoints {
+        left_side: CoordinatePair::Pair {
+            x: x_coordinate_left,
+            y: y,
+        },
+        right_side: CoordinatePair::Pair {
+            x: x_coordinate_right,
+            y: y,
+        },
+    }
+}
